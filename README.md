@@ -1,7 +1,7 @@
 # Antares-Tower(分布式任务调度平台Antares的前端系统)
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/ihaolin/antares/master/logo.jpg">
+  <img src="https://raw.githubusercontent.com/ihaolin/antares/master/logo.png">
 </p>
 
 ## 快速开始
