@@ -23,6 +23,6 @@
 
 ## 项目相关
 
-+ 后端系统可见[diablo](https://github.com/ihaolin/antares).
++ 后端系统可见[antares](https://github.com/ihaolin/antares).
 
 
