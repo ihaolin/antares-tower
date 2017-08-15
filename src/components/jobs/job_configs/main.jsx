@@ -11,6 +11,7 @@ import AppSelect from '../../apps/app_select/main';
 import JobEdit from '../job_edit/main';
 import JobOperate from '../job_operate/main';
 import JobDependence from '../job_dependence/main';
+import JobAssign from '../job_assign/main';
 
 
 const JobConfigs = React.createClass({
@@ -26,6 +27,7 @@ const JobConfigs = React.createClass({
       editingJob: null,
       operatingJob: null,
       dependencingJob: null,
+      assigningJob: null,
       operate: '',
     };
   },
@@ -133,8 +135,16 @@ const JobConfigs = React.createClass({
     this.setState({dependencingJob: null});
   },
 
-  onDependenceFailed(){
-    
+  onAssign(job){
+    this.setState({assigningJob: job});
+  },
+
+  onAssignSubmitted(){
+    this.setState({assigningJob: null});
+  },
+
+  onAssignCanceled(){
+    this.setState({assigningJob: null});
   },
 
   render() {
@@ -145,6 +155,7 @@ const JobConfigs = React.createClass({
     const editingJob = this.state.editingJob;
     const operatingJob = this.state.operatingJob;
     const dependencingJob = this.state.dependencingJob;
+    const assigningJob = this.state.assigningJob;
     const operate = this.state.operate;
 
     return (
@@ -213,6 +224,10 @@ const JobConfigs = React.createClass({
                       <I18nText code="jobs.dependence.config" />
                     </a>
                     <span className="ant-divider"></span> 
+                    <a href="#" onClick={() => self.onAssign(record)}>
+                      <I18nText code="jobs.assigns" />
+                    </a>
+                    <span className="ant-divider"></span> 
                     <a href="#" onClick={() => self.onDelete(record)}>
                       <I18nText code="delete" />
                     </a>
@@ -246,6 +261,12 @@ const JobConfigs = React.createClass({
                            onSubmitted={this.onDependenceSubmitted} 
                            onCanceled={this.onDependenceCanceled} 
                            onFailed={this.onDependenceFailed}/> }
+
+          { assigningJob === null ? null : 
+            <JobAssign job={assigningJob} 
+                           onSubmitted={this.onAssignSubmitted} 
+                           onCanceled={this.onAssignCanceled} 
+                           onFailed={this.onAssignFailed}/> }
           
       </div>
     );

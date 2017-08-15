@@ -594,6 +594,33 @@ const nextJobsData = {
   ]
 };
 
+const assignData = [
+  {
+    "ip": "10.40.0.108",
+    "assign": true,
+    "processes": [
+      "10.40.0.108:24657",
+      "10.40.0.108:24659"
+    ]
+  },
+  {
+    "ip": "10.40.0.109",
+    "assign": false,
+    "processes": [
+      "10.40.0.109:11222",
+    ]
+  },
+  {
+    "ip": "10.40.0.110",
+    "assign": true,
+    "processes": [
+      "10.40.0.110:36352",
+      "10.40.0.110:48493",
+      "10.40.0.110:23423",
+    ]
+  },
+]
+
 module.exports = {
   
   'GET /api/apps': function(req, res) {
@@ -828,4 +855,26 @@ module.exports = {
     }, 500);
   },
 
+  'GET /api/jobs/(.*)/assigns': function(req, res) {
+
+    setTimeout(function() {
+      res.json({
+        "status": 200,
+        "err": null,
+        "data": assignData,
+        "success": true
+      });
+    }, 500);
+  },
+
+  'POST /api/jobs/(.*)/assigns': function(req, res) {
+    setTimeout(function() {
+      res.json({
+        "status": 200,
+        "err": null,
+        "data": true,
+        "success": true
+      });
+    }, 500);
+  },
 };

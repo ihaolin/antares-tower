@@ -122,6 +122,9 @@ const I18n = {
 	      "jobs.dependence": "[{0}]'s Next Jobs",
 	      "jobs.dependence.config": "Dependence Config",
 	      "jobs.next.ids": "Next Job Ids, e.g., 123,456",
+	      "jobs.assign": "Assign【{0}】's clients",
+	      "jobs.assigns": "Assign Client",
+	      "jobs.assign.inst": "Instance Number",
 	      "clusters.mgr": "Cluster Management",
 	      "clusters.servers": "Server List",
 	      "clusters.servers.jobs": "Server[{0}]'s jobs",
@@ -150,7 +153,8 @@ const I18n = {
 		  "servers.jobs.list": "Job List",
 	      "name.tip": "(A-Za-z0-9_)",
 	      "field.format.error": "The format isn't right: {0}",
-	      "enable.or.not": "Enable or not"
+	      "enable.or.not": "Enable or not",
+	      "ip": "IP"
 	    },
 
 	    'zh': {
@@ -257,6 +261,9 @@ const I18n = {
 	      "jobs.dependence": "【{0}】的后置任务",
 	      "jobs.dependence.config": "依赖配置",
 	      "jobs.next.ids": "后置任务ID, 如123",
+	      "jobs.assign": "指定【{0}】的客户端",
+	      "jobs.assigns": "指定客户端",
+	      "jobs.assign.inst": "实例数",
 	      "clusters.mgr": "集群管理",
 	      "clusters.servers": "服务器列表",
 	      "clusters.servers.jobs": "服务器【{0}】调度的任务",
@@ -286,7 +293,8 @@ const I18n = {
 	      "servers.shutdown.confirm": "确定要关闭服务器【{0}】吗？",
 	      "name.tip": "(字母、数字或下划线)",
 	      "field.format.error": "输入格式不正确: {0}",
-	      "enable.or.not": "是否启用"
+	      "enable.or.not": "是否启用",
+	      "ip": "IP"
 	    }
 	},
 
