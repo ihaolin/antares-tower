@@ -113,7 +113,7 @@ export default class Apps extends Component {
         </Breadcrumb>
 
         <Search
-          style={{width: '250px'}}
+          style={{width: 260}}
           onSearch={value => this.onSearch(value)}
           placeholder={t('input.fullname')}
           enterButton/>

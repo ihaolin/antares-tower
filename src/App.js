@@ -2,10 +2,11 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import DefaultLayout from './layouts/layout'
 import NotFound from './components/common/404'
 import React, { Component } from 'react'
+import { hot } from 'react-hot-loader'
 
 import './app.less'
 
-export default class App extends Component {
+class App extends Component {
   render () {
     return (
       <BrowserRouter>
@@ -17,3 +18,5 @@ export default class App extends Component {
     )
   }
 }
+
+export default hot(module)(App)

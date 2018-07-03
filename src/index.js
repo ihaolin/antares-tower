@@ -1,8 +1,13 @@
-import { AppContainer } from 'react-hot-loader'
 import ReactDOM from 'react-dom'
 import React from 'react'
-import app from './app'
+import App from './App'
 
+ReactDOM.render(
+  <App/>,
+  document.getElementById('app')
+)
+
+/*
 const render = Component => {
   ReactDOM.render(
     <AppContainer>
@@ -17,3 +22,4 @@ render(app)
 if (module.hot) {
   module.hot.accept('./app', () => { render(app) })
 }
+*/

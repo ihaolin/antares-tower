@@ -168,8 +168,9 @@ export default class JobConfigs extends React.Component {
 
           <Search
             className="ml-3"
-            style={{width: 220}}
+            style={{width: 250}}
             placeholder={t('input.classname')}
+            enterButton={true}
             onSearch={(val) => this.onSearch(val)}
             disabled={appId === null}/>
 

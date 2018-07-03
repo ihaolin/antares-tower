@@ -119,7 +119,8 @@ class JobInstances extends React.Component {
         <AppSelect onChange={(val) => this.onAppChange(val)}/>
 
         <Search className="ml-3"
-                style={{width: 220}}
+                style={{width: 250}}
+                enterButton={true}
                 placeholder={t('input.classname')}
                 onSearch={(val) => this.onSearch(val)}
                 onChange={(e) => this.onJobClassChange(e)}

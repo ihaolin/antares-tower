@@ -158,13 +158,12 @@ class JobControls extends React.Component {
 
           <Search
             className="ml-3"
-            style={{width: 220}}
+            style={{width: 250}}
             placeholder={t('input.classname')}
+            enterButton={true}
             onSearch={() => this.onSearch()} disabled={appId === null}/>
 
-          <Button className="ml-3" type="primary" onClick={() => this.onRefresh()}>
-            {t('refresh')}
-          </Button>
+          <Button className="ml-3" type="primary" onClick={() => this.onRefresh()}>{t('refresh')}</Button>
 
         </div>
         <Table

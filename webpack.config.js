@@ -77,8 +77,13 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            'plugins': [
-              ['import', {'libraryName': 'antd', 'libraryDirectory': 'es', 'style': true}]
+            // This is a feature of `babel-loader` for webpack (not Babel itself).
+            // It enables caching results in ./node_modules/.cache/babel-loader/
+            // directory for faster rebuilds.
+            cacheDirectory: true,
+            plugins: [
+              ['import', {'libraryName': 'antd', 'libraryDirectory': 'es', 'style': true}],
+              'react-hot-loader/babel'
             ]
           }
         }
