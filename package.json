@@ -8,10 +8,9 @@
     "start": "webpack-dev-server --mode=development --open --hot",
     "build": "cross-env NODE_ENV=production webpack --mode=production"
   },
-  "author": "pinglinh",
+  "author": "ihaolin",
   "license": "ISC",
   "devDependencies": {
-    "atool-build": "^1.0.2",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.4",
     "babel-plugin-import": "^1.8.0",
@@ -23,7 +22,6 @@
     "less": "^3.0.4",
     "less-loader": "^4.1.0",
     "mini-css-extract-plugin": "^0.4.1",
-    "node-sass": "^4.9.0",
     "react-hot-loader": "^4.3.3",
     "style-loader": "^0.20.3",
     "url-loader": "^1.0.1",
