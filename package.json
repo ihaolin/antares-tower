@@ -6,7 +6,8 @@
   "main": "src/index.js",
   "scripts": {
     "start": "webpack-dev-server --mode=development --open --hot",
-    "build": "cross-env NODE_ENV=production webpack --mode=production"
+    "build": "cross-env NODE_ENV=production webpack --mode=production",
+    "commit": "commit-wizard"
   },
   "author": "ihaolin",
   "license": "ISC",
@@ -22,6 +23,7 @@
     "less": "^3.0.4",
     "less-loader": "^4.1.0",
     "mini-css-extract-plugin": "^0.4.1",
+    "pre-git": "^3.17.1",
     "react-hot-loader": "^4.3.3",
     "style-loader": "^0.20.3",
     "url-loader": "^1.0.1",
@@ -38,5 +40,18 @@
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-router-dom": "^4.3.1"
+  },
+  "release": {
+    "analyzeCommits": "simple-commit-message"
+  },
+  "config": {
+    "pre-git": {
+      "commit-msg": "simple",
+      "pre-commit": [],
+      "pre-push": [],
+      "post-commit": [],
+      "post-checkout": [],
+      "post-merge": []
+    }
   }
 }
