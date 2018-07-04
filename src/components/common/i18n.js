@@ -185,6 +185,7 @@ const msgs = {
     'ajax.failed': '请求失败',
     'ajax.success': '请求成功',
     'operate.success': '操作成功',
+    'more': '更多',
     'on': 'ON',
     'off': 'OFF',
     'not.found': '未找到记录',

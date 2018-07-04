@@ -1,5 +1,5 @@
-import { Button, Divider, Dropdown, Icon, Input, Menu, Switch, Table } from 'antd'
 import React from 'react'
+import { Button, Input, Menu, Table } from 'antd'
 import t from '../common/i18n'
 import { Ajax } from '../common/ajax'
 import BreadTitle from '../common/bread-title'
@@ -9,6 +9,8 @@ import JobOperate from './job.operate'
 import JobDependence from './job.dependence'
 import JobAssign from './job.assign'
 
+import './job.configs.less'
+
 const Search = Input.Search
 
 export default class JobConfigs extends React.Component {
@@ -16,17 +18,17 @@ export default class JobConfigs extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      dependencingJob: null,
-      operatingJob: null,
-      assigningJob: null,
-      editingJob: null,
-      searchJobClass: '',
+      loading: false,
+      jobs: [],
       pagination: false,
       pageSize: 10,
-      loading: false,
       appId: null,
-      operate: '',
-      jobs: []
+      searchJobClass: '',
+      editingJob: null,
+      operatingJob: null,
+      dependencingJob: null,
+      assigningJob: null,
+      operate: ''
     }
   }
 
@@ -43,10 +45,7 @@ export default class JobConfigs extends React.Component {
       var d = jsonData
       self.setState({
         loading: false,
-        jobs: d.data.map(j => {
-          j.operating = false
-          return j
-        }),
+        jobs: d.data,
         appId: appId,
         searchJobClass: jobClass,
         pagination: {
@@ -148,22 +147,6 @@ export default class JobConfigs extends React.Component {
     this.setState({assigningJob: null})
   }
 
-  onStateChange (checked, job, idx) {
-    var self = this
-    var jobs = self.state.jobs
-    job = jobs[idx]
-    job.operating = true
-    self.setState({jobs})
-    Ajax.post('/api/jobs/' + job.id + (checked ? '/enable' : '/disable'), {}, function (response) {
-      job.operating = false
-      self.setState({jobs})
-      if (response) {
-        job.status = checked ? 1 : 0
-        self.setState({jobs})
-      }
-    })
-  }
-
   render () {
 
     const self = this
@@ -174,6 +157,19 @@ export default class JobConfigs extends React.Component {
     const dependencingJob = this.state.dependencingJob
     const assigningJob = this.state.assigningJob
     const operate = this.state.operate
+
+    const menu = (
+      <Menu>
+        <Menu.Item key="0">
+          <a href="http://www.alipay.com/">1st menu item</a>
+        </Menu.Item>
+        <Menu.Item key="1">
+          <a href="http://www.taobao.com/">2nd menu item</a>
+        </Menu.Item>
+        <Menu.Divider/>
+        <Menu.Item key="3">3rd menu item</Menu.Item>
+      </Menu>
+    )
 
     return (
       <div>
@@ -202,49 +198,46 @@ export default class JobConfigs extends React.Component {
         <Table
           className="mt-3"
           columns={[
-            {title: t('id'), dataIndex: 'id', key: 'id', className: 'keep-word'},
-            {title: t('jobs.class'), dataIndex: 'clazz', key: 'clazz', render: (text) => <code>{text}</code>},
-            {title: t('jobs.cron'), dataIndex: 'cron', key: 'cron', render: (text) => <code>{text}</code>},
-            {title: t('desc'), dataIndex: 'desc', key: 'desc'},
+            {title: t('id'), dataIndex: 'id', key: 'id', width: '5%', className: 'keep-word'},
             {
-              title: t('status'), key: 'status',
-              render (text, job, idx) {
-                const statusDesc = job.status === 1 ? t('enable') : t('disable')
-                const statusClass = job.status === 1 ? 'text-success' : 'text-danger'
+              title: t('jobs.class'), dataIndex: 'clazz', key: 'clazz', width: '30%',
+              render: (text) => <code>{text}</code>
+            },
+            {
+              title: t('jobs.cron'), dataIndex: 'cron', key: 'cron', width: '15%',
+              render: (text) => <code>{text}</code>
+            },
+            {title: t('desc'), dataIndex: 'desc', key: 'desc', width: '20%'},
+            {
+              title: t('status'), key: 'status', width: '8%',
+              render (text, record) {
+                const statusDesc = record.status === 1 ? t('enable') : t('disable')
+                const statusClass = record.status === 1 ? 'status-enbale' : 'status-disable'
                 return (
-                  <span>
-                    <Switch
-                      checkedChildren={<Icon type="check"/>}
-                      unCheckedChildren={<Icon type="cross"/>}
-                      checked={job.status === 1}
-                      loading={job.operating}
-                      onClick={(c) => self.onStateChange(c, job, idx)}/>
-                    <span className={'align-middle ' + statusClass}> {statusDesc}</span>
-                  </span>
+                  <span className={statusClass}>{statusDesc}</span>
                 )
               }
             },
             {
               title: t('operation'), key: 'operation',
-              render (text, job) {
+              render (text, record) {
 
-                let menu = (
-                  <Menu>
-                    <Menu.Item key="1" onClick={() => self.onAssign(job)}><Icon type="pushpin-o"/> {t('jobs.assigns')}</Menu.Item>
-                    <Menu.Item key="2" onClick={() => self.onDependenceConfig(job)}><Icon type="share-alt"/> {t('jobs.dependence.config')}</Menu.Item>
-                    <Menu.Divider/>
-                    <Menu.Item key="3" onClick={() => self.onDelete(job)}><Icon type="delete"/> {t('delete')}</Menu.Item>
-                  </Menu>
-                )
+                let disableOrEnable = record.status === 1 ?
+                  (<a onClick={() => self.onDisable(record)}>{t('disable')}</a>) :
+                  (<a onClick={() => self.onEnable(record)}>{t('enable')}</a>)
 
                 return (
-                  <div>
-                    <a onClick={() => self.onUpdate(job)}><Icon type="form"/> {t('update')}</a>
-                    <Divider type="vertical"/>
-                    <Dropdown overlay={menu} placement="bottomRight" trigger={['click']}>
-                      <a>{t('more')} <Icon type="down"/></a>
-                    </Dropdown>
-                  </div>
+                  <span>
+                    <a onClick={() => self.onUpdate(record)}>{t('update')}</a>
+                    <span className="ant-divider"></span>
+                    {disableOrEnable}
+                    <span className="ant-divider"></span>
+                    <a onClick={() => self.onDependenceConfig(record)}>{t('jobs.dependence.config')}</a>
+                    <span className="ant-divider"></span> 
+                    <a onClick={() => self.onAssign(record)}>{t('jobs.assigns')}</a>
+                    <span className="ant-divider"></span> 
+                    <a onClick={() => self.onDelete(record)}>{t('delete')}</a>
+                  </span>
                 )
               }
             }

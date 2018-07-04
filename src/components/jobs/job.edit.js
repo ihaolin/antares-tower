@@ -140,7 +140,7 @@ class JobEdit extends React.Component {
     // job timeout
     const timeoutInputTip = t('input') + t('jobs.timeout')
 
-    // job status
+    // job states
     const statusChecked = (currentJob.status !== undefined && currentJob.status === 1)
 
     return (

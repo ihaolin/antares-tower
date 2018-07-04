@@ -1,11 +1,12 @@
 import React from 'react'
-import { Button, Input, Table } from 'antd'
+import { Badge, Button, Input, Table } from 'antd'
 import BreadTitle from '../common/bread-title'
 import AppSelect from '../apps/app-select'
 import JobOperate from './job.operate'
 import JobInstanceDetail from './job.instance.detail'
 import { Ajax } from '../common/ajax'
 import t from '../common/i18n'
+import { states } from '../common/constans'
 
 import './job.controls.less'
 
@@ -171,20 +172,16 @@ class JobControls extends React.Component {
           columns={[
             {title: t('id'), dataIndex: 'id', key: 'id', width: '5%'},
             {
-              title: t('jobs.class'), dataIndex: 'clazz', key: 'clazz', width: '20%',
+              title: t('jobs.class'), dataIndex: 'clazz', key: 'clazz',
               render: (text) => <code>{text}</code>
             },
-            {title: t('jobs.fire.time.prev'), dataIndex: 'prevFireTime', key: 'prevFireTime', width: '13%'},
+            {title: t('jobs.fire.time.prev'), dataIndex: 'prevFireTime', key: 'prevFireTime'},
             {title: t('jobs.fire.time'), dataIndex: 'fireTime', key: 'fireTime', width: '13%'},
-            {title: t('jobs.fire.time.next'), dataIndex: 'nextFireTime', key: 'nextFireTime', width: '13%'},
-            {title: t('jobs.scheduler'), dataIndex: 'scheduler', key: 'scheduler', width: '12%'},
+            {title: t('jobs.fire.time.next'), dataIndex: 'nextFireTime', key: 'nextFireTime'},
+            {title: t('jobs.scheduler'), dataIndex: 'scheduler', key: 'scheduler'},
+            {title: t('status'), render: (text, job) => <Badge status={states[job.state]} text={job.stateDesc}/>},
             {
-              title: t('status'), width: '6%',
-              render: (text, record) => <span className={'state-' + record.state}>{record.stateDesc}</span>
-            },
-            {
-              title: t('operation'),
-              render (text, record) {
+              title: t('operation'), render (text, record) {
                 const state = record.state
 
                 return (
