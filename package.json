@@ -1,50 +1,42 @@
 {
-  "private": true,
-  "entry": {},
-  "dependencies": {
-    "antd": "^2.0.0",
-    "atool-build": "0.7.x",
-    "babel-plugin-antd": "0.4.x",
-    "babel-plugin-transform-runtime": "^6.8.0",
-    "babel-runtime": "^6.6.1",
-    "classnames": "^2.2.3",
-    "es3ify-loader": "^0.2.0",
-    "history": "^2.0.1",
-    "isomorphic-fetch": "^2.2.1",
-    "js-cookie": "^2.1.1",
-    "react": "^15.0.2",
-    "react-dom": "^15.0.2",
-    "react-router": "^2.0.1",
-    "query-string": "^4.2.0"
-  },
-  "devDependencies": {
-    "atool-test-mocha": "^0.1.4",
-    "babel-eslint": "^6.0.0",
-    "babel-plugin-import": "^1.0.1",
-    "babel-runtime": "^6.9.2",
-    "dora": "0.3.x",
-    "dora-plugin-browser-history": "^0.1.1",
-    "dora-plugin-hmr": "0.6.x",
-    "dora-plugin-livereload": "0.3.x",
-    "dora-plugin-proxy": "0.6.x",
-    "dora-plugin-webpack": "0.6.x",
-    "eslint-plugin-import": "^2.0.1",
-    "eslint-config-airbnb": "^12.0.0",
-    "eslint-plugin-jsx-a11y": "^2.2.3",
-    "eslint-plugin-react": "^6.4.1",
-    "eslint": "^2.7.0",
-    "expect": "^1.20.1",
-    "glob": "^7.0.3",
-    "pre-commit": "1.x"
-  },
-  "pre-commit": [
-    "lint"
-  ],
+  "name": "antares-tower",
+  "version": "1.0.0",
+  "repository": "https://github.com/ihaolin/antares-tower",
+  "description": "A ready to use simple webpack boilerplate",
+  "main": "src/index.js",
   "scripts": {
-    "build": "atool-build",
-    "lint": "eslint --ext .js,.jsx src",
-    "start": "dora -p 8001 --plugins \"webpack,hmr,proxy,livereload?enableJs=false&injectHost=127.0.0.1,browser-history?index=/src/entries/index.html\"",
-    "test": "atool-test-mocha ./src/**/__tests__/*-test.js"
+    "start": "webpack-dev-server --mode=development --open --hot",
+    "build": "cross-env NODE_ENV=production webpack --mode=production"
   },
-  "theme": "./theme.js"
+  "author": "ihaolin",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.4",
+    "babel-plugin-import": "^1.8.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "cross-env": "^5.2.0",
+    "css-loader": "^0.28.11",
+    "html-webpack-plugin": "^3.2.0",
+    "less": "^3.0.4",
+    "less-loader": "^4.1.0",
+    "mini-css-extract-plugin": "^0.4.1",
+    "react-hot-loader": "^4.3.3",
+    "style-loader": "^0.20.3",
+    "url-loader": "^1.0.1",
+    "webpack": "^4.14.0",
+    "webpack-api-mocker": "^1.5.2",
+    "webpack-cli": "^3.0.8",
+    "webpack-dev-server": "^3.1.4"
+  },
+  "dependencies": {
+    "antd": "^3.6.4",
+    "classnames": "latest",
+    "prop-types": "latest",
+    "query-string": "latest",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "react-router-dom": "^4.3.1"
+  }
 }
