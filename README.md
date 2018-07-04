@@ -6,6 +6,14 @@
 
 ## 快速开始
 
++ node版本：v10.4.1；
+
++ 安装：
+
+	```
+	cnpm install
+	```
+
 + 运行项目：
 
 	```
@@ -13,12 +21,12 @@
 	cnpm start
 	```
 
-+ 访问项目：[localhost:8989](http://localhost:8989) 
++ 访问项目：[localhost:3000](http://localhost:3000) 
 
 + 构建项目：
 
 	```
-	atool-build
+	./deploy.sh
 	```
 
 ## 项目相关
