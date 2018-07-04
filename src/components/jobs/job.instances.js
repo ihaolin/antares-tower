@@ -4,7 +4,6 @@ import { Ajax } from '../common/ajax'
 import BreadTitle from '../common/bread-title'
 import AppSelect from '../apps/app-select'
 import JobInstanceDetail from './job.instance.detail'
-import queryString from 'query-string'
 import t from '../../i18n'
 
 const Search = Input.Search
@@ -33,14 +32,7 @@ class JobInstances extends React.Component {
 
     const pageSize = this.state.pageSize
 
-    const params = {
-      appId: appId,
-      jobClass: jobClass,
-      pageNo: pageNo,
-      pageSize: pageSize
-    }
-
-    Ajax.get('/api/jobs/instances', params, function (jsonData) {
+    Ajax.get('/api/jobs/instances', {appId, jobClass, pageNo, pageSize}, function (jsonData) {
       var d = jsonData
       self.setState({
         loading: false,
@@ -48,10 +40,10 @@ class JobInstances extends React.Component {
         appId: appId,
         jobClass: jobClass,
         pagination: {
+          pageSize: pageSize,
           current: pageNo,
           total: d.total,
-          pageSize: pageSize,
-          showTotal: (total) => t('total', total)
+          showTotal: total => t('total', total)
         }
       })
     }, function (err) {
