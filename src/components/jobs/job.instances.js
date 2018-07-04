@@ -4,6 +4,7 @@ import { Ajax } from '../common/ajax'
 import BreadTitle from '../common/bread-title'
 import AppSelect from '../apps/app-select'
 import JobInstanceDetail from './job.instance.detail'
+import queryString from 'query-string'
 import t from '../../i18n'
 
 const Search = Input.Search

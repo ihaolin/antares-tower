@@ -103,7 +103,6 @@ export default {
   'jobs.assigns': 'Assign Client',
   'jobs.assign.inst': 'Instance Number',
 
-  'operate.success': 'Operate success',
   'on': 'ON',
   'off': 'OFF',
 

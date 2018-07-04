@@ -27,8 +27,6 @@ export default function (code, args) {
     return args ? format(txt, args) : txt
   } else {
     var split = code.split('.')
-
-    console.log(split)
     return split.map(capitalize)
   }
 }
