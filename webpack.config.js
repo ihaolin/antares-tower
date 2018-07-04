@@ -46,7 +46,6 @@ module.exports = {
         // pathRewrite: {'^/api' : ''}
       }
     },
-    */
     inline: true,
     historyApiFallback: true,
     contentBase: '/public',
