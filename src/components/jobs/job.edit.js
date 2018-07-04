@@ -2,7 +2,7 @@ import { Button, Form, Input, InputNumber, Modal, Switch, Tabs } from 'antd'
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Ajax } from '../common/ajax'
-import t from '../common/i18n'
+import t from '../../i18n'
 
 const TextArea = Input.TextArea
 const FormItem = Form.Item

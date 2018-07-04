@@ -3,7 +3,7 @@ import { Button, Table } from 'antd'
 import AppSelect from '../apps/app-select'
 import BreadTitle from '../common/bread-title'
 import { Ajax } from '../common/ajax'
-import t from '../common/i18n'
+import t from '../../i18n'
 
 import './clients.less'
 

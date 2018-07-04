@@ -4,7 +4,7 @@ import { Ajax } from '../common/ajax'
 import BreadTitle from '../common/bread-title'
 import AppSelect from '../apps/app-select'
 import JobInstanceDetail from './job.instance.detail'
-import t from '../common/i18n'
+import t from '../../i18n'
 
 const Search = Input.Search
 

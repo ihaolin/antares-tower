@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Button, message, Modal } from 'antd'
-import t from '../common/i18n'
+import t from '../../i18n'
 
 import { Ajax } from '../common/ajax'
 

@@ -5,7 +5,7 @@ import AppSelect from '../apps/app-select'
 import JobOperate from './job.operate'
 import JobInstanceDetail from './job.instance.detail'
 import { Ajax } from '../common/ajax'
-import t from '../common/i18n'
+import t from '../../i18n'
 import { states } from '../common/constans'
 
 import './job.controls.less'

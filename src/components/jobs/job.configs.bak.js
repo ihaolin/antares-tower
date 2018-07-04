@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button, Input, Menu, Table } from 'antd'
-import t from '../common/i18n'
+import t from '../../i18n'
 import { Ajax } from '../common/ajax'
 import BreadTitle from '../common/bread-title'
 import AppSelect from '.././apps/app-select'

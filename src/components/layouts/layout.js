@@ -3,12 +3,12 @@ import { Route, Switch } from 'react-router-dom'
 import { Layout } from 'antd'
 import LayoutHeader from './layout-header'
 import LayoutFooter from './layout-footer'
-import Servers from '../components/servers/servers'
-import Clients from '../components/clients/clients'
-import JobInstances from '../components/jobs/job.instances'
-import JobControls from '../components/jobs/job.controls'
-import JobConfigs from '../components/jobs/job.configs'
-import Apps from '../components/apps/apps'
+import Servers from '../servers/servers'
+import Clients from '../clients/clients'
+import JobInstances from '../jobs/job.instances'
+import JobControls from '../jobs/job.controls'
+import JobConfigs from '../jobs/job.configs'
+import Apps from '../apps/apps'
 
 const Content = Layout
 

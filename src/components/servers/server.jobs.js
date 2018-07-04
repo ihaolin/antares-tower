@@ -1,7 +1,7 @@
 import { Button, Modal, Table } from 'antd'
 import React from 'react'
 import { Ajax } from '../common/ajax'
-import t from '../common/i18n'
+import t from '../../i18n'
 
 class ServerJobs extends React.Component {
 

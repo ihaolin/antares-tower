@@ -2,7 +2,7 @@ import { Button, Input, Modal, Popconfirm, Table } from 'antd'
 import React from 'react'
 import JobOperate from './job.operate'
 import { Ajax } from '../common/ajax'
-import t from '../common/i18n'
+import t from '../../i18n'
 
 class JobDependence extends React.Component {
 

@@ -1,7 +1,7 @@
 import { Button, Form, Modal, Progress, Table, Tabs } from 'antd'
 import React from 'react'
 import { Ajax } from '../common/ajax'
-import t from '../common/i18n'
+import t from '../../i18n'
 
 import './job.instance.detail.less'
 

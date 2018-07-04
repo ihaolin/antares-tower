@@ -1,6 +1,5 @@
 import { Button, Divider, Dropdown, Icon, Input, Menu, Switch, Table } from 'antd'
 import React from 'react'
-import t from '../common/i18n'
 import { Ajax } from '../common/ajax'
 import BreadTitle from '../common/bread-title'
 import AppSelect from '.././apps/app-select'
@@ -8,6 +7,7 @@ import JobEdit from './job.edit'
 import JobOperate from './job.operate'
 import JobDependence from './job.dependence'
 import JobAssign from './job.assign'
+import t from '../../i18n'
 
 const Search = Input.Search
 
@@ -218,6 +218,7 @@ export default class JobConfigs extends React.Component {
                       unCheckedChildren={<Icon type="cross"/>}
                       checked={job.status === 1}
                       loading={job.operating}
+                      title={t('switch')}
                       onClick={(c) => self.onStateChange(c, job, idx)}/>
                     <span className={'align-middle ' + statusClass}> {statusDesc}</span>
                   </span>

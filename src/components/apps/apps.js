@@ -3,7 +3,7 @@ import { Breadcrumb, Button, Divider, Input, Table } from 'antd'
 import { Ajax } from '../common/ajax'
 import AppDelete from './app-delete'
 import AppEdit from './app-edit'
-import t from '../common/i18n'
+import t from '../../i18n'
 
 const Search = Input.Search
 

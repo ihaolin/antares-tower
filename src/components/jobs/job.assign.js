@@ -1,6 +1,6 @@
 import { Button, message, Modal, Table } from 'antd'
 import { Ajax } from '../common/ajax'
-import t from '../common/i18n'
+import t from '../../i18n'
 import React from 'react'
 
 class JobAssign extends React.Component {

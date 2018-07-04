@@ -1,10 +1,10 @@
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
-import DefaultLayout from './layouts/layout'
+import DefaultLayout from './components/layouts/layout'
 import NotFound from './components/common/404'
 import React, { Component } from 'react'
 import { hot } from 'react-hot-loader'
 
-import './app.less'
+import './App.less'
 
 class App extends Component {
   render () {

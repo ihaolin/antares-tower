@@ -1,7 +1,7 @@
 import { Button, Icon, Layout, Menu, Tooltip } from 'antd'
 import { Link } from 'react-router-dom'
 import React, { Component } from 'react'
-import t, { lang } from '../components/common/i18n'
+import t, { lang } from '../../i18n'
 
 import './layout-header.less'
 
