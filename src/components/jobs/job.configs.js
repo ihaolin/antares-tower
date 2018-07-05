@@ -104,26 +104,17 @@ class JobConfigs extends React.Component {
   onAppChange (appId) {
     this.loadJobs(appId, 1, this.state.searchJobClass)
   }
-
-  onStateChange (checked, job, idx) {
+  
+  onStateChange (checked, job) {
     var self = this
     var jobs = self.state.jobs
-    job = jobs[idx]
     job.operating = true
     self.setState({jobs})
-    Ajax.post('/api/jobs/' + job.id + (checked ? '/enable' : '/disable'), {}, function (response) {
+    Ajax.post('/api/jobs/' + job.id + (checked ? '/enable' : '/disable'), {}, function () {
       job.operating = false
+      job.status = checked ? 1 : 0
       self.setState({jobs})
-      if (response) {
-        job.status = checked ? 1 : 0
-        self.setState({jobs})
-      }
     })
-  }
-
-  viewHistory (job) {
-    console.log(job)
-    return <Redirect push to="/job-instances"/>
   }
 
   render () {
