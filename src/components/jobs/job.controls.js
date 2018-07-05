@@ -207,9 +207,9 @@ class JobControls extends React.Component {
           loading={this.state.loading}
           pagination={this.state.pagination}
           expandedRowRender={(record) => self.renderJobExtra(record)}
-
+          onChange={(p) => this.onPageChange(p)}
           rowKey="id"
-          onChange={(p) => this.onPageChange(p)}/>
+        />
 
         {operatingJob === null ? null :
           <JobOperate

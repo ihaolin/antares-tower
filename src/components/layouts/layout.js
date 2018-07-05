@@ -1,19 +1,21 @@
-import React, { Component } from 'react'
 import { Route, Switch } from 'react-router-dom'
-import { Layout } from 'antd'
+import React, { Component } from 'react'
 import LayoutHeader from './layout-header'
 import LayoutFooter from './layout-footer'
-import Servers from '../servers/servers'
-import Clients from '../clients/clients'
 import JobInstances from '../jobs/job.instances'
 import JobControls from '../jobs/job.controls'
 import JobConfigs from '../jobs/job.configs'
+import Clients from '../clients/clients'
+import Servers from '../servers/servers'
 import Apps from '../apps/apps'
+import { Layout } from 'antd'
 
 const Content = Layout
 
 export default class DefaultLayout extends Component {
+  
   render () {
+    
     return (
       <Layout style={{height: '100%'}}>
         <LayoutHeader/>

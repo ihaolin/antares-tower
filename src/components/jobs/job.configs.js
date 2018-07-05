@@ -1,5 +1,5 @@
 import { Button, Divider, Dropdown, Icon, Input, Menu, Switch, Table } from 'antd'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import BreadTitle from '../common/bread-title'
 import AppSelect from '.././apps/app-select'
 import JobEdit from './job.edit'
@@ -157,7 +157,7 @@ class JobConfigs extends React.Component {
             {title: t('desc'), dataIndex: 'desc', key: 'desc'},
             {
               title: t('status'), key: 'status',
-              render (text, job, idx) {
+              render (text, job) {
                 const statusDesc = job.status === 1 ? t('enable') : t('disable')
                 const statusClass = job.status === 1 ? 'text-success' : 'text-danger'
                 return (
@@ -168,7 +168,7 @@ class JobConfigs extends React.Component {
                       checked={job.status === 1}
                       loading={job.operating}
                       title={t('switch')}
-                      onClick={(c) => self.onStateChange(c, job, idx)}/>
+                      onClick={(c) => self.onStateChange(c, job)}/>
                     <span className={'align-middle ' + statusClass}> {statusDesc}</span>
                   </span>
                 )
@@ -182,7 +182,7 @@ class JobConfigs extends React.Component {
                   <Menu>
                     <Menu.Item key="1" onClick={() => self.setState({assigningJob: job})}><Icon type="pushpin-o"/> {t('jobs.assigns')}</Menu.Item>
                     <Menu.Item key="2" onClick={() => self.setState({dependencingJob: job})}><Icon type="share-alt"/> {t('jobs.dependence.config')}</Menu.Item>
-                    <Menu.Item key="3"><Link to={'/job-instances?id=' + job.id}><Icon type="clock-circle-o"/> {t('jobs.instances')}</Link></Menu.Item>
+                    <Menu.Item key="3"><NavLink to={'/job-instances?id=' + job.id}><Icon type="clock-circle-o"/> {t('jobs.instances')}</NavLink></Menu.Item>
                     <Menu.Divider/>
                     <Menu.Item key="4" onClick={() => self.onDelete(job)}><Icon type="delete"/> {t('delete')}</Menu.Item>
                   </Menu>
