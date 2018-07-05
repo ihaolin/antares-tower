@@ -1,7 +1,7 @@
 import {Button, Icon, Layout, Menu, Tooltip} from 'antd'
 import {Link, withRouter} from 'react-router-dom'
 import React, {Component} from 'react'
-import t, {lang} from '../../i18n'
+import t, {lang, language} from '../../i18n'
 
 import './layout-header.less'
 
@@ -21,8 +21,10 @@ class LayoutHeader extends Component {
   switchLang () {
     var lang = this.state.lang
     lang = lang === 'en' ? 'zh' : 'en'
-    localStorage.setItem('lang', lang)
-    window.location.reload()
+    language(lang)
+    this.setState({lang})
+    // no need to `full reload` current page, change will affected after next component update
+    // location.reload()
   }
   
   render () {

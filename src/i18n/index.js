@@ -12,14 +12,19 @@ function format (txt) {
 }
 
 function capitalize (str) {
-  return str.replace(/\b\w/g, function (c) { return c.toUpperCase() })
+  return str.replace(/\b\w/g, function (c) {
+    return c.toUpperCase()
+  })
 }
 
-export const lang = function () {
-  var lang = localStorage.getItem('lang') || navigator.language
+// lang switch
+export const language = function (ln) {
+  lang = ln || localStorage.getItem('lang') || navigator.language
   localStorage.setItem('lang', lang)
   return lang.substr(0, 2)
-}()
+}
+
+export var lang = language()
 
 export default function (code, args) {
   var txt = msgs[lang][code]
@@ -30,4 +35,3 @@ export default function (code, args) {
     return split.map(capitalize)
   }
 }
-
