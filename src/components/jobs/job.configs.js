@@ -178,13 +178,18 @@ class JobConfigs extends React.Component {
               title: t('operation'), key: 'operation',
               render (text, job) {
 
-                let menu = (
+                var menu = (
                   <Menu>
-                    <Menu.Item key="1" onClick={() => self.setState({assigningJob: job})}><Icon type="pushpin-o"/> {t('jobs.assigns')}</Menu.Item>
-                    <Menu.Item key="2" onClick={() => self.setState({dependencingJob: job})}><Icon type="share-alt"/> {t('jobs.dependence.config')}</Menu.Item>
-                    <Menu.Item key="3"><NavLink to={'/job-instances?id=' + job.id}><Icon type="clock-circle-o"/> {t('jobs.instances')}</NavLink></Menu.Item>
+                    <Menu.Item key="1" onClick={() => self.setState({assigningJob: job})}>
+                      <Icon type="pushpin-o"/> {t('jobs.assigns')}</Menu.Item>
+                    <Menu.Item key="2" onClick={() => self.setState({dependencingJob: job})}>
+                      <Icon type="share-alt"/> {t('jobs.dependence.config')}</Menu.Item>
+                    <Menu.Item key="3">
+                      <NavLink to={'/job-instances?jobClass=' + job.clazz}><Icon type="clock-circle-o"/> {t('jobs.instances')}</NavLink>
+                    </Menu.Item>
                     <Menu.Divider/>
-                    <Menu.Item key="4" onClick={() => self.onDelete(job)}><Icon type="delete"/> {t('delete')}</Menu.Item>
+                    <Menu.Item key="4" onClick={() => self.onDelete(job)}>
+                      <Icon type="delete"/> {t('delete')}</Menu.Item>
                   </Menu>
                 )
 

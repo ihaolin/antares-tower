@@ -1,9 +1,10 @@
-import React from 'react'
 import { Button, Input, Table } from 'antd'
-import { Ajax } from '../common/ajax'
 import BreadTitle from '../common/bread-title'
-import AppSelect from '../apps/app-select'
 import JobInstanceDetail from './job.instance.detail'
+import AppSelect from '../apps/app-select'
+import React from 'react'
+import { Ajax } from '../common/ajax'
+import qs from 'query-string'
 import t from '../../i18n'
 
 const Search = Input.Search
@@ -23,15 +24,19 @@ class JobInstances extends React.Component {
     }
   }
 
+  componentDidMount () {
+    var jobClass = qs.parse(this.props.location.search).jobClass
+    this.setState({jobClass})
+
+  }
+
   loadJobInstances (appId, pageNo, jobClass) {
+    const pageSize = this.state.pageSize
+    const self = this
 
     jobClass = jobClass || ''
 
-    const self = this
     self.setState({loading: true})
-
-    const pageSize = this.state.pageSize
-
     Ajax.get('/api/jobs/instances', {appId, jobClass, pageNo, pageSize}, function (jsonData) {
       var d = jsonData
       self.setState({
@@ -55,49 +60,27 @@ class JobInstances extends React.Component {
     this.loadJobInstances(this.state.appId, p.current, this.state.jobClass)
   }
 
+  onAppChange (appId) {
+    this.setState({appId: appId})
+    if (this.state.jobClass) {
+      this.onSearch(this.state.jobClass)
+    }
+  }
+
   onRefresh () {
     const {appId, pagination, jobClass} = this.state
     this.loadJobInstances(appId, pagination.current, jobClass)
-  }
-
-  onDetail (instance) {
-    this.setState({detailInstance: instance})
-  }
-
-  onDetailCanceled () {
-    this.setState({detailInstance: null})
-  }
-
-  onDetailFailed () {
-    this.setState({detailInstance: null})
-  }
-
-  onJobClassChange (e) {
-    this.setState({
-      jobClass: e.target.value.trim()
-    })
   }
 
   onSearch (jobClass) {
     this.loadJobInstances(this.state.appId, 1, jobClass)
   }
 
-  onAppChange (appId) {
-    this.setState({appId: appId})
-  }
-
-  renderJobInstanceError (instance) {
-    if (instance.status === 4) {
-      return (
-        <p>{instance.cause}</p>
-      )
-    }
-    return null
+  expandedRowRender (instance) {
+    return instance.status === 4 ? (<p>{instance.cause}</p>) : null
   }
 
   render () {
-
-    const self = this
 
     const appId = this.state.appId
     const jobClass = this.state.jobClass
@@ -113,10 +96,11 @@ class JobInstances extends React.Component {
 
         <Search className="ml-3"
                 style={{width: 250}}
+                defaultValue={this.state.jobClass}
                 enterButton={true}
                 placeholder={t('input.classname')}
                 onSearch={(val) => this.onSearch(val)}
-                onChange={(e) => this.onJobClassChange(e)}
+                onChange={(e) => this.setState({jobClass: e.target.value.trim()})}
                 disabled={!this.state.appId}/>
 
         <Button className="ml-3"
@@ -129,40 +113,34 @@ class JobInstances extends React.Component {
         <Table
           className="mt-3"
           columns={[
-            {title: t('id'), dataIndex: 'id', key: 'id', width: '10%'},
-            {title: t('table.start.time'), dataIndex: 'startTime', key: 'startTime', width: '15%'},
-            {title: t('table.end.time'), dataIndex: 'endTime', key: 'endTime', width: '15%'},
-            {title: t('table.cost.time'), dataIndex: 'costTime', key: 'costTime', width: '15%'},
-            {title: t('table.trigger.type'), dataIndex: 'triggerTypeDesc', key: 'triggerTypeDesc', width: '10%'},
-            {title: t('status'), dataIndex: 'statusDesc', key: 'statusDesc', width: '10%'},
+            {title: t('id'), dataIndex: 'id', key: 'id'},
+            {title: t('table.start.time'), dataIndex: 'startTime', key: 'startTime'},
+            {title: t('table.end.time'), dataIndex: 'endTime', key: 'endTime'},
+            {title: t('table.cost.time'), dataIndex: 'costTime', key: 'costTime'},
+            {title: t('table.trigger.type'), dataIndex: 'triggerTypeDesc', key: 'triggerTypeDesc'},
+            {title: t('status'), dataIndex: 'statusDesc', key: 'statusDesc'},
             {
-              title: t('operation'), key: 'operation', render (text, record) {
-                return (
-                  <a onClick={() => self.onDetail(record)}>
-                    {t('jobs.instance.detail')}
-                  </a>
-                )
-              }
+              title: t('operation'), key: 'operation', render: (text, job) => (
+                <a onClick={() => this.setState({detailInstance: job})}>{t('jobs.instance.detail')}</a>
+              )
             }
           ]}
           dataSource={this.state.instances}
           loading={this.state.loading}
           pagination={this.state.pagination}
-          expandedRowRender={(record) => self.renderJobInstanceError(record)}
+          expandedRowRender={(record) => this.expandedRowRender(record)}
           onChange={(p) => this.onPageChange(p)}
-          rowKey="id"
-        />
+          rowKey="id"/>
 
         {detailInstance === null ? null :
-          <JobInstanceDetail uri={`/api/jobs/instances/${detailInstance.id}`}
-                             onCanceled={() => this.onDetailCanceled()}
-                             onFailed={() => this.onDetailFailed()}/>}
+          <JobInstanceDetail
+            uri={`/api/jobs/instances/${detailInstance.id}`}
+            onCanceled={() => setState({detailInstance: null})}
+            onFailed={() => this.setState({detailInstance: null})}/>}
 
       </div>
     )
   }
 }
-
-JobInstances.propTypes = {}
 
 export default JobInstances

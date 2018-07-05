@@ -29,7 +29,7 @@ module.exports = {
     // #https://github.com/webpack/webpack-dev-server/issues/882
     disableHostCheck: true,
 
-    // api mock
+    /* api mock */
     before (app) {
       apiMocker(app, path.resolve('./mocker.js'), {
         proxy: {
@@ -38,11 +38,11 @@ module.exports = {
         changeHost: true
       })
     },
-    
+
     // api proxy redirect
     proxy: {
       '/api': {
-        target: 'http://localhost:22111'
+        target: 'http://192.168.3.208:22111'
         // pathRewrite: {'^/api' : ''}
       }
     },
