@@ -64,7 +64,6 @@ code, .keep-word {
 .state-2, // job state 执行中
 .shard-1 // job instance shard RUNNING
 {color: @blue-6}
-.ant-badge-status-stopped,
 .status-6, // job instance status TIMEOUT_CLOSED
 .state-3 // job state 停止
 {color: @gold-6}
@@ -73,8 +72,10 @@ code, .keep-word {
 .state-4, // job state 执行失败
 .shard-3 // job instance shard FAILED
 {color: @red-6}
-.ant-badge-status-wating,
 .status-5, // job instance status TERMINATED
 .state-5 // job state 暂停
 {color: @yellow-6}
 .text-purple {color: @purple-6}
+
+.ant-badge-status-stopped { background-color: @yellow-6}
+.ant-badge-status-wating { background-color: @purple-6}

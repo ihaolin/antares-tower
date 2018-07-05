@@ -186,7 +186,7 @@ export default class JobInstanceDetail extends React.Component {
           <TabPane tab={t('jobs.instance.running.info')} key="1">
             <Form>
               <FormItem className="mb-0" {...layout} label={t('jobs.instance.finish.percent')}>
-                <Progress status={detail.finishPercent < 100 ? 'active' : ''} percent={detail.finishPercent}/>
+                <Progress status={detail.finishPercent < 100 ? 'active' : 'normal'} percent={detail.finishPercent}/>
               </FormItem>
               <FormItem className="mb-0" {...layout} label={t('status')}>{detail.statusDesc}</FormItem>
               <FormItem className="mb-0" {...layout} label={t('start.time')}>{detail.startTime}</FormItem>
