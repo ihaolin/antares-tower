@@ -17,8 +17,8 @@ var cssOption = {
 module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: '[name].js',
-    chunkFilename: '[name].js'
+    filename: dev ? '[name].js' : '[name].[hash:6].js',
+    chunkFilename: dev ? '[id].js' : '[id].[hash:6].js'
   },
   // see https://webpack.github.io/docs/webpack-dev-server.html
   devServer: {

@@ -135,7 +135,7 @@ class JobInstances extends React.Component {
         {detailInstance === null ? null :
           <JobInstanceDetail
             uri={`/api/jobs/instances/${detailInstance.id}`}
-            onCanceled={() => setState({detailInstance: null})}
+            onCanceled={() => this.setState({detailInstance: null})}
             onFailed={() => this.setState({detailInstance: null})}/>}
 
       </div>
