@@ -12,6 +12,9 @@
   body {
     background: #fafafa;
   }
+  ul, ol {
+    margin: 0;
+  }
 
   .ant-breadcrumb {
     font-size: 16px;
@@ -45,9 +48,8 @@
 }
 code {
   color: @primary-color;
-  padding: 3px;
-  background: #f6f6f6;
   border-radius: 3px;
+  padding: 3px;
 }
 code, .keep-word {
   word-break: keep-all;
@@ -60,12 +62,16 @@ code, .keep-word {
 .mr-2 { margin-right: .5rem}
 .ml-2 { margin-left: .5rem}
 .mt-2 { margin-top: .5rem}
-
-.ant-badge-status-wating{background-color: #17a2b8}
-.ant-badge-status-stopped{background-color: teal}
+.state-0 {color: red}
+.state-1 {color: blue}
+.state-2 {color: green}
+.state-3 {color: gray}
+.state-4 {color: red}
+.state-5 {color: orange}
+.ant-badge-status-wating {background-color: #17a2b8}
+.ant-badge-status-stopped {background-color: teal}
 .text-success {color: #52c41a}
 .text-danger {color: #f5222d}
-
 .align-middle {
   vertical-align: middle;
 }

@@ -8,8 +8,6 @@ import { Ajax } from '../common/ajax'
 import t from '../../i18n'
 import { states } from '../common/constans'
 
-import './job.controls.less'
-
 const Search = Input.Search
 
 class JobControls extends React.Component {

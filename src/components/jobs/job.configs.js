@@ -104,7 +104,7 @@ class JobConfigs extends React.Component {
   onAppChange (appId) {
     this.loadJobs(appId, 1, this.state.searchJobClass)
   }
-  
+
   onStateChange (checked, job) {
     var self = this
     var jobs = self.state.jobs
@@ -152,7 +152,11 @@ class JobConfigs extends React.Component {
           className="mt-3"
           columns={[
             {title: t('id'), dataIndex: 'id', key: 'id', className: 'keep-word'},
-            {title: t('jobs.class'), dataIndex: 'clazz', key: 'clazz', render: (text) => <code>{text}</code>},
+            {
+              title: t('jobs.class'), dataIndex: 'clazz', key: 'clazz', render (text, job) {
+                return <NavLink to={'/job-instances?jobClass=' + job.clazz}><code>{text}</code></NavLink>
+              }
+            },
             {title: t('jobs.cron'), dataIndex: 'cron', key: 'cron', render: (text) => <code>{text}</code>},
             {title: t('desc'), dataIndex: 'desc', key: 'desc'},
             {
