@@ -118,7 +118,11 @@ class JobInstances extends React.Component {
             {title: t('table.end.time'), dataIndex: 'endTime', key: 'endTime'},
             {title: t('table.cost.time'), dataIndex: 'costTime', key: 'costTime'},
             {title: t('table.trigger.type'), dataIndex: 'triggerTypeDesc', key: 'triggerTypeDesc'},
-            {title: t('status'), dataIndex: 'statusDesc', key: 'statusDesc'},
+            {
+              title: t('status'), dataIndex: 'statusDesc', key: 'statusDesc', render: (text, job) => (
+                <span className={'status-' + job.status}>{text}</span>
+              )
+            },
             {
               title: t('operation'), key: 'operation', render: (text, job) => (
                 <a onClick={() => this.setState({detailInstance: job})}>{t('jobs.instance.detail')}</a>
