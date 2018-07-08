@@ -80,7 +80,7 @@ export default {
   'jobs.disable.confirm': '确定要停用该任务吗，停用后任务将不再被调度，可通过【启用】操作重新调度',
   'jobs.enable.confirm': '确定要启用该任务吗，启用后任务将开始调度？',
   'jobs.delete.confirm': '确定要删除该任务吗？',
-  'jobs.stop.confirm': '确定要删除停止该任务吗，停止后任务不再被调度，可通过【调度】操作重新调度？',
+  'jobs.stop.confirm': '确定要停止该任务吗，停止后任务不再被调度，可通过【调度】操作重新调度？',
   'jobs.schedule.confirm': '确定要开始调度该任务吗，之后任务将开始调度？',
   'jobs.del_next.confirm': '确定要删除该后置任务？',
   'jobs.terminate.confirm': '确定要终止当前任务实例吗？',

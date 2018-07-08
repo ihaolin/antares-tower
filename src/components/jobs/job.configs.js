@@ -212,8 +212,8 @@ class JobConfigs extends React.Component {
           dataSource={this.state.jobs}
           loading={this.state.loading}
           pagination={this.state.pagination}
-          rowKey="id"
-          onChange={(p) => this.onPageChange(p)}/>
+          onChange={(p) => this.onPageChange(p)}
+          rowKey="id"/>
 
         {editingJob === null ? null :
           <JobEdit job={editingJob}

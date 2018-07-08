@@ -168,7 +168,7 @@ export default class JobInstanceDetail extends React.Component {
 
     const detail = this.state.detail
     const layout = {
-      wrapperCol: {span: 14},
+      wrapperCol: {span: 15},
       labelCol: {span: 6}
     }
 

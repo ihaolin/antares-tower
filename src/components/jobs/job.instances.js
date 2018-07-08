@@ -1,4 +1,4 @@
-import { Button, Input, Table } from 'antd'
+import { Button, Input, Table, message } from 'antd'
 import BreadTitle from '../common/bread-title'
 import JobInstanceDetail from './job.instance.detail'
 import AppSelect from '../apps/app-select'
@@ -51,7 +51,7 @@ class JobInstances extends React.Component {
           showTotal: total => t('total', total)
         }
       })
-    }, function (err) {
+    }, function () {
       self.setState({loading: false})
     })
   }
@@ -73,6 +73,8 @@ class JobInstances extends React.Component {
   }
 
   onSearch (jobClass) {
+    jobClass = jobClass.trim()
+    if (!jobClass) return
     this.loadJobInstances(this.state.appId, 1, jobClass)
   }
 
