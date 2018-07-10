@@ -1,9 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Button, message, Modal } from 'antd'
-import t from '../common/i18n'
-
 import { Ajax } from '../common/ajax'
+import t from '../../i18n'
 
 class JobOperate extends React.Component {
 
@@ -17,13 +16,9 @@ class JobOperate extends React.Component {
   handleSubmit () {
 
     const self = this
-
-    const jobId = this.props.job.id
-
     const operate = this.props.operate
-
     const suffix = this.props.suffix || ''
-
+    const jobId = this.props.job.id
     const uri = '/api/jobs/' + jobId + '/' + operate + (suffix ? '/' + suffix : '')
 
     // start submiting
@@ -33,7 +28,6 @@ class JobOperate extends React.Component {
 
       // stop submiting when post finished
       self.setState({confirming: false})
-
       message.success(t('operate.success'));
 
       // callback parent submit

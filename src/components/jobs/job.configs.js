@@ -1,34 +1,33 @@
-import React from 'react'
-import { Button, Input, Table } from 'antd'
-import t from '../common/i18n'
-import { Ajax } from '../common/ajax'
+import { Button, Divider, Dropdown, Icon, Input, Menu, Switch, Table } from 'antd'
+import { NavLink } from 'react-router-dom'
 import BreadTitle from '../common/bread-title'
 import AppSelect from '.././apps/app-select'
 import JobEdit from './job.edit'
 import JobOperate from './job.operate'
 import JobDependence from './job.dependence'
 import JobAssign from './job.assign'
-
-import './job.configs.less'
+import { Ajax } from '../common/ajax'
+import React from 'react'
+import t from '../../i18n'
 
 const Search = Input.Search
 
-export default class JobConfigs extends React.Component {
+class JobConfigs extends React.Component {
 
   constructor (props) {
     super(props)
     this.state = {
-      loading: false,
-      jobs: [],
+      dependencingJob: null,
+      operatingJob: null,
+      assigningJob: null,
+      editingJob: null,
+      searchJobClass: '',
       pagination: false,
       pageSize: 10,
+      loading: false,
       appId: null,
-      searchJobClass: '',
-      editingJob: null,
-      operatingJob: null,
-      dependencingJob: null,
-      assigningJob: null,
-      operate: ''
+      operate: '',
+      jobs: []
     }
   }
 
@@ -45,7 +44,10 @@ export default class JobConfigs extends React.Component {
       var d = jsonData
       self.setState({
         loading: false,
-        jobs: d.data,
+        jobs: d.data.map(j => {
+          j.operating = false
+          return j
+        }),
         appId: appId,
         searchJobClass: jobClass,
         pagination: {
@@ -71,17 +73,9 @@ export default class JobConfigs extends React.Component {
     this.loadJobs(appId, pagination.current, searchJobClass)
   }
 
-  onUpdate (job) {
-    this.setState({editingJob: job})
-  }
-
   onEditSubmitted () {
     this.setState({editingJob: null})
     this.onRefresh()
-  }
-
-  onEditCanceled () {
-    this.setState({editingJob: null})
   }
 
   onEditFailed () {
@@ -91,14 +85,6 @@ export default class JobConfigs extends React.Component {
 
   onDelete (job) {
     this.setState({operatingJob: job, operate: 'delete'})
-  }
-
-  onEnable (job) {
-    this.setState({operatingJob: job, operate: 'enable'})
-  }
-
-  onDisable (job) {
-    this.setState({operatingJob: job, operate: 'disable'})
   }
 
   onOperateSubmitted () {
@@ -115,36 +101,20 @@ export default class JobConfigs extends React.Component {
     this.onRefresh()
   }
 
-  onSearch (jobClass) {
-    this.loadJobs(this.state.appId, 1, jobClass)
-  }
-
   onAppChange (appId) {
     this.loadJobs(appId, 1, this.state.searchJobClass)
   }
 
-  onDependenceConfig (job) {
-    this.setState({dependencingJob: job})
-  }
-
-  onDependenceSubmitted () {
-    this.setState({dependencingJob: null})
-  }
-
-  onDependenceCanceled () {
-    this.setState({dependencingJob: null})
-  }
-
-  onAssign (job) {
-    this.setState({assigningJob: job})
-  }
-
-  onAssignSubmitted () {
-    this.setState({assigningJob: null})
-  }
-
-  onAssignCanceled () {
-    this.setState({assigningJob: null})
+  onStateChange (checked, job) {
+    var self = this
+    var jobs = self.state.jobs
+    job.operating = true
+    self.setState({jobs})
+    Ajax.post('/api/jobs/' + job.id + (checked ? '/enable' : '/disable'), {}, function () {
+      job.operating = false
+      job.status = checked ? 1 : 0
+      self.setState({jobs})
+    })
   }
 
   render () {
@@ -171,60 +141,70 @@ export default class JobConfigs extends React.Component {
             style={{width: 250}}
             placeholder={t('input.classname')}
             enterButton={true}
-            onSearch={(val) => this.onSearch(val)}
+            onSearch={(val) => this.loadJobs(this.state.appId, 1, val)}
             disabled={appId === null}/>
 
-          <Button className="ml-3" type="primary" onClick={() => this.onAdd()} disabled={appId === null}>
-            {t('add')}
-          </Button>
-          <Button className="ml-3" type="primary" onClick={() => this.onRefresh()}>
-            {t('refresh')}
-          </Button>
+          <Button className="ml-3" type="primary" onClick={() => this.onAdd()} disabled={appId === null}>{t('add')}</Button>
+          <Button className="ml-3" type="primary" onClick={() => this.onRefresh()}>{t('refresh')}</Button>
         </div>
 
         <Table
           className="mt-3"
           columns={[
-            {title: t('id'), dataIndex: 'id', key: 'id', width: '5%', className: "keep-word"},
+            {title: t('id'), dataIndex: 'id', key: 'id', className: 'keep-word'},
             {
-              title: t('jobs.class'), dataIndex: 'clazz', key: 'clazz', width: '30%',
-              render: (text) => <code>{text}</code>
+              title: t('jobs.class'), dataIndex: 'clazz', key: 'clazz', render (text, job) {
+                return <NavLink to={'/job-instances?jobClass=' + job.clazz}><code>{text}</code></NavLink>
+              }
             },
+            {title: t('jobs.cron'), dataIndex: 'cron', key: 'cron', render: (text) => <code>{text}</code>},
+            {title: t('desc'), dataIndex: 'desc', key: 'desc'},
             {
-              title: t('jobs.cron'), dataIndex: 'cron', key: 'cron', width: '15%',
-              render: (text) => <code>{text}</code>
-            },
-            {title: t('desc'), dataIndex: 'desc', key: 'desc', width: '20%'},
-            {
-              title: t('status'), key: 'status', width: '8%',
-              render (text, record) {
-                const statusDesc = record.status === 1 ? t('enable') : t('disable')
-                const statusClass = record.status === 1 ? 'status-enbale' : 'status-disable'
+              title: t('status'), key: 'status',
+              render (text, job) {
+                const statusDesc = job.status === 1 ? t('enable') : t('disable')
+                const statusClass = job.status === 1 ? 'text-success' : 'text-danger'
                 return (
-                  <span className={statusClass}>{statusDesc}</span>
+                  <span>
+                    <Switch
+                      checkedChildren={<Icon type="check"/>}
+                      unCheckedChildren={<Icon type="cross"/>}
+                      checked={job.status === 1}
+                      loading={job.operating}
+                      title={t('switch')}
+                      onClick={(c) => self.onStateChange(c, job)}/>
+                    <span className={'align-middle ' + statusClass}> {statusDesc}</span>
+                  </span>
                 )
               }
             },
             {
               title: t('operation'), key: 'operation',
-              render (text, record) {
+              render (text, job) {
 
-                let disableOrEnable = record.status === 1 ?
-                  (<a onClick={() => self.onDisable(record)}>{t('disable')}</a>) :
-                  (<a onClick={() => self.onEnable(record)}>{t('enable')}</a>)
+                var menu = (
+                  <Menu>
+                    <Menu.Item key="1" onClick={() => self.setState({assigningJob: job})}>
+                      <Icon type="pushpin-o"/> {t('jobs.assigns')}</Menu.Item>
+                    <Menu.Item key="2" onClick={() => self.setState({dependencingJob: job})}>
+                      <Icon type="share-alt"/> {t('jobs.dependence.config')}</Menu.Item>
+                    <Menu.Item key="3">
+                      <NavLink to={'/job-instances?jobClass=' + job.clazz}><Icon type="clock-circle-o"/> {t('jobs.instances')}</NavLink>
+                    </Menu.Item>
+                    <Menu.Divider/>
+                    <Menu.Item key="4" onClick={() => self.onDelete(job)}>
+                      <Icon type="delete"/> {t('delete')}</Menu.Item>
+                  </Menu>
+                )
 
                 return (
-                  <span>
-                    <a onClick={() => self.onUpdate(record)}>{t('update')}</a>
-                    <span className="ant-divider"></span>
-                    {disableOrEnable}
-                    <span className="ant-divider"></span>
-                    <a onClick={() => self.onDependenceConfig(record)}>{t('jobs.dependence.config')}</a>
-                    <span className="ant-divider"></span> 
-                    <a onClick={() => self.onAssign(record)}>{t('jobs.assigns')}</a>
-                    <span className="ant-divider"></span> 
-                    <a onClick={() => self.onDelete(record)}>{t('delete')}</a>
-                  </span>
+                  <div>
+                    <a onClick={() => self.setState({editingJob: job})}><Icon type="form"/> {t('update')}</a>
+                    <Divider type="vertical"/>
+                    <Dropdown overlay={menu} placement="bottomRight" trigger={['click']}>
+                      <a>{t('more')} <Icon type="down"/></a>
+                    </Dropdown>
+                  </div>
                 )
               }
             }
@@ -232,13 +212,13 @@ export default class JobConfigs extends React.Component {
           dataSource={this.state.jobs}
           loading={this.state.loading}
           pagination={this.state.pagination}
-          rowKey="id"
-          onChange={(p) => this.onPageChange(p)}/>
+          onChange={(p) => this.onPageChange(p)}
+          rowKey="id"/>
 
         {editingJob === null ? null :
           <JobEdit job={editingJob}
                    onSubmitted={() => this.onEditSubmitted()}
-                   onCanceled={() => this.onEditCanceled()}
+                   onCanceled={() => this.setState({editingJob: null})}
                    onFailed={() => this.onEditFailed()}/>}
 
         {operatingJob === null ? null :
@@ -250,17 +230,19 @@ export default class JobConfigs extends React.Component {
 
         {dependencingJob === null ? null :
           <JobDependence job={dependencingJob}
-                         onSubmitted={() => this.onDependenceSubmitted()}
-                         onCanceled={() => this.onDependenceCanceled()}
+                         onSubmitted={() => this.setState({dependencingJob: null})}
+                         onCanceled={() => this.setState({dependencingJob: null})}
                          onFailed={() => this.onDependenceFailed()}/>}
 
         {assigningJob === null ? null :
           <JobAssign job={assigningJob}
-                     onSubmitted={() => this.onAssignSubmitted()}
-                     onCanceled={() => this.onAssignCanceled()}
+                     onSubmitted={() => this.setState({assigningJob: null})}
+                     onCanceled={() => this.setState({assigningJob: null})}
                      onFailed={() => this.onAssignFailed()}/>}
 
       </div>
     )
   }
 }
+
+export default JobConfigs

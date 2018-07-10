@@ -1,7 +1,7 @@
 import { Button, message, Modal, Table } from 'antd'
 import { Ajax } from '../common/ajax'
-import t from '../common/i18n'
 import React from 'react'
+import t from '../../i18n'
 
 class JobAssign extends React.Component {
 
@@ -18,11 +18,9 @@ class JobAssign extends React.Component {
   componentDidMount () {
 
     const job = this.props.job
-
     const self = this
 
     self.setState({loading: true})
-
     Ajax.get('/api/jobs/' + job.id + '/assigns', {}, function (assignDatas) {
 
       var tmpAssignIps = []
@@ -34,12 +32,10 @@ class JobAssign extends React.Component {
         })
       }
 
-      console.log(tmpAssignIps)
-
       self.setState({
-        loading: false,
+        assignIps: tmpAssignIps,
         assigns: assignDatas,
-        assignIps: tmpAssignIps
+        loading: false
       })
     })
   }
@@ -52,20 +48,17 @@ class JobAssign extends React.Component {
 
     const self = this
 
-    // start submiting
-    self.setState({submitting: true})
-
     var assignIpsStr = self.state.assignIps.length > 0 ? self.state.assignIps.join(',') : '-1'
 
-    // submit 
+    // start submiting
+    self.setState({submitting: true})
     Ajax.post('/api/jobs/' + self.props.job.id + '/assigns', {'assignIps': assignIpsStr}, function (jsonData) {
 
       // stop submiting when post finished
       self.setState({submitting: false})
-
       // success tip
       message.success(t('operate.success'))
-
+      self.handleCancel()
     }, function (err) {
       message.error(err)
     })
@@ -82,7 +75,7 @@ class JobAssign extends React.Component {
     }
 
     return (
-      <ul style={{marginLeft: 60}}>{processes}</ul>
+      <ul style={{marginLeft: 22}}>{processes}</ul>
     )
   }
 
@@ -91,7 +84,6 @@ class JobAssign extends React.Component {
     const self = this
     const job = this.props.job
     const assigns = this.state.assigns
-
     const title = t('jobs.assign', job.clazz)
 
     return (
@@ -129,11 +121,9 @@ class JobAssign extends React.Component {
           dataSource={assigns}
           pagination={false}
           loading={this.state.loading}
-
-          rowKey="ip"
           size="middle"
+          rowKey="ip"
         />
-
       </Modal>
     )
   }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Breadcrumb } from 'antd'
-import t from './i18n'
+import t from '../../i18n'
 
 export default class BreadTitle extends Component {
 

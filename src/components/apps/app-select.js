@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Select } from 'antd'
 import { Ajax } from '../common/ajax'
-import t from '../common/i18n'
+import t from '../../i18n'
 
 const Option = Select.Option
 

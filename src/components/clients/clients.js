@@ -3,7 +3,7 @@ import { Button, Table } from 'antd'
 import AppSelect from '../apps/app-select'
 import BreadTitle from '../common/bread-title'
 import { Ajax } from '../common/ajax'
-import t from '../common/i18n'
+import t from '../../i18n'
 
 import './clients.less'
 
@@ -50,23 +50,23 @@ class Clients extends React.Component {
           {t('refresh')}
         </Button>
 
-        <Table className="mt-3"
-               columns={[
-                 {title: t('clients.addr'), dataIndex: 'addr', key: 'addr'},
-                 {
-                   title: t('operation'), key: 'operation',
-                   render (text, record) {
-                     return (
-                       <span></span>
-                     )
-                   }
-                 }
-               ]}
-               dataSource={this.state.clients}
-               loading={this.state.loading}
-               pagination={false}
-               rowKey="addr"
-               />
+        <Table
+          className="mt-3"
+          columns={[
+            {title: t('clients.addr'), dataIndex: 'addr', key: 'addr'},
+            {
+              title: t('operation'), key: 'operation', render (text, record) {
+                return (
+                  <span></span>
+                )
+              }
+            }
+          ]}
+          dataSource={this.state.clients}
+          loading={this.state.loading}
+          pagination={false}
+          rowKey="addr"
+        />
       </div>
     )
   }

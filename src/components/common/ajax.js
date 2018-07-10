@@ -1,6 +1,6 @@
 import queryString from 'query-string'
 import { message } from 'antd'
-import t from './i18n'
+import t from '../../i18n'
 
 /**
  * Ajax with fetch API

@@ -1,9 +1,9 @@
 import React from 'react'
 import { Button, Icon, Table, Tooltip } from 'antd'
-import t from '../common/i18n'
 import { Ajax } from '../common/ajax'
 import BreadTitle from '../common/bread-title'
 import ServerJobs from './server.jobs'
+import t from '../../i18n'
 
 import './servers.less'
 

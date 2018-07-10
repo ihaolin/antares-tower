@@ -1,7 +1,7 @@
 import { Button, Form, Modal, Progress, Table, Tabs } from 'antd'
 import React from 'react'
 import { Ajax } from '../common/ajax'
-import t from '../common/i18n'
+import t from '../../i18n'
 
 import './job.instance.detail.less'
 
@@ -114,11 +114,9 @@ export default class JobInstanceDetail extends React.Component {
   }
 
   handleCancel () {
-
     if (this.state.intervalId) {
       clearInterval(this.state.intervalId)
     }
-
     this.props.onCanceled && this.props.onCanceled()
   }
 
@@ -132,32 +130,32 @@ export default class JobInstanceDetail extends React.Component {
       <table className="shard-extra-table">
         <tbody>
         <tr>
-          <td className="item-name">{t('jobs.instance.shard.pull.client')}</td>
+          <th>{t('jobs.instance.shard.pull.client')}</th>
           <td>{shard.pullClient}</td>
         </tr>
         <tr>
-          <td className="item-name">{t('jobs.instance.shard.finish.client')}</td>
+          <th>{t('jobs.instance.shard.finish.client')}</th>
           <td>{shard.finishClient}</td>
         </tr>
         <tr>
-          <td className="item-name">{t('jobs.instance.shard.pull.count')}</td>
+          <th>{t('jobs.instance.shard.pull.count')}</th>
           <td>{shard.pullCount}</td>
         </tr>
         <tr>
-          <td className="item-name">{t('jobs.instance.shard.pull.time')}</td>
+          <th>{t('jobs.instance.shard.pull.time')}</th>
           <td>{shard.pullTime}</td>
         </tr>
         <tr>
-          <td className="item-name">{t('start.time')}</td>
+          <th>{t('start.time')}</th>
           <td>{shard.startTime}</td>
         </tr>
         <tr>
-          <td className="item-name">{t('end.time')}</td>
+          <th>{t('end.time')}</th>
           <td>{shard.endTime}</td>
         </tr>
         {shard.status === 3 ? (
           <tr>
-            <td className="item-name">{t('error.info')}</td>
+            <th>{t('error.info')}</th>
             <td>{shard.cause}</td>
           </tr>
         ) : null}
@@ -169,9 +167,8 @@ export default class JobInstanceDetail extends React.Component {
   render () {
 
     const detail = this.state.detail
-
-    const formItemLayout = {
-      wrapperCol: {span: 14},
+    const layout = {
+      wrapperCol: {span: 15},
       labelCol: {span: 6}
     }
 
@@ -183,70 +180,49 @@ export default class JobInstanceDetail extends React.Component {
         closable={true}
         visible={true}
         width={580}
-        footer={<Button key="back" type="ghost" size="large" onClick={() => this.handleCancel()}>{t('close')}</Button>}>
+        footer={<Button size="large" onClick={() => this.handleCancel()}>{t('close')}</Button>}>
 
         <Tabs defaultActiveKey="1" type="card">
           <TabPane tab={t('jobs.instance.running.info')} key="1">
             <Form>
-              <FormItem className="monitor-item" {...formItemLayout} label={t('jobs.instance.finish.percent')}>
-                <Progress width={80} status={detail.finishPercent < 100 ? 'active' : 'normal'} percent={detail.finishPercent}/>
+              <FormItem className="mb-0" {...layout} label={t('jobs.instance.finish.percent')}>
+                <Progress status={detail.finishPercent < 100 ? 'active' : 'normal'} percent={detail.finishPercent}/>
               </FormItem>
-
-              <FormItem className="monitor-item" {...formItemLayout} label={t('status')}>
-                <span>{detail.statusDesc} </span>
-              </FormItem>
-
-              <FormItem className="monitor-item" {...formItemLayout} label={t('start.time')}>
-                <span>{detail.startTime} </span>
-              </FormItem>
-
-              <FormItem className="monitor-item" {...formItemLayout} label={t('end.time')}>
-                <span>{detail.endTime} </span>
-              </FormItem>
-
-              <FormItem className="monitor-item" {...formItemLayout} label={t('jobs.instance.total.shard.count')}>
-                <span>{detail.totalShardCount} </span>
-              </FormItem>
-
-              <FormItem className="monitor-item" {...formItemLayout} label={t('jobs.instance.wait.shard.count')}>
-                <span>{detail.waitShardCount} </span>
-              </FormItem>
-
-              <FormItem className="monitor-item" {...formItemLayout} label={t('jobs.instance.running.shard.count')}>
-                <span>{detail.runningShardCount} </span>
-              </FormItem>
-
-              <FormItem className="monitor-item" {...formItemLayout} label={t('jobs.instance.success.shard.count')}>
-                <span>{detail.successShardCount} </span>
-              </FormItem>
-
-              <FormItem className="monitor-item" {...formItemLayout} label={t('jobs.instance.failed.shard.count')}>
-                <span>{detail.failedShardCount} </span>
-              </FormItem>
-
+              <FormItem className="mb-0" {...layout} label={t('status')}>{detail.statusDesc}</FormItem>
+              <FormItem className="mb-0" {...layout} label={t('start.time')}>{detail.startTime}</FormItem>
+              <FormItem className="mb-0" {...layout} label={t('end.time')}>{detail.endTime}</FormItem>
+              <FormItem className="mb-0" {...layout} label={t('jobs.instance.total.shard.count')}>{detail.totalShardCount}</FormItem>
+              <FormItem className="mb-0" {...layout} label={t('jobs.instance.wait.shard.count')}>{detail.waitShardCount}</FormItem>
+              <FormItem className="mb-0" {...layout} label={t('jobs.instance.running.shard.count')}>{detail.runningShardCount}</FormItem>
+              <FormItem className="mb-0" {...layout} label={t('jobs.instance.success.shard.count')}>{detail.successShardCount}</FormItem>
+              <FormItem className="mb-0" {...layout} label={t('jobs.instance.failed.shard.count')}>{detail.failedShardCount}</FormItem>
             </Form>
           </TabPane>
+
           <TabPane tab={t('jobs.instance.shards.info')} key="2">
             <Button type="primary" onClick={() => this.onRefreshShards()} size="small">{t('refresh')}</Button>
             <Table
               className="mt-2"
               columns={[
-                {title: t('id'), dataIndex: 'id', key: 'id', width: '15%'},
-                {title: t('jobs.instance.shard.item'), dataIndex: 'item', key: 'item', width: '15%'},
-                {title: t('jobs.instance.shard.param'), dataIndex: 'param', key: 'param', width: '45%'},
-                {title: t('status'), dataIndex: 'statusDesc', key: 'statusDesc'}
+                {title: t('id'), dataIndex: 'id', key: 'id'},
+                {title: t('jobs.instance.shard.item'), dataIndex: 'item', key: 'item'},
+                {title: t('jobs.instance.shard.param'), dataIndex: 'param', key: 'param'},
+                {
+                  title: t('status'), dataIndex: 'statusDesc', key: 'statusDesc', render: (text, job) => (
+                    <span className={'shard-' + job.status}>{text}</span>
+                  )
+                }
               ]}
-              dataSource={this.state.shards}
-              rowKey="id"
               loading={this.state.loadingShards}
               pagination={this.state.pagination}
-
+              dataSource={this.state.shards}
               expandedRowRender={(record) => this.renderShardExtra(record)}
               onChange={() => this.onShardsPageChange()}
-              size="middle"/>
+              size="middle"
+              rowKey="id"
+            />
           </TabPane>
         </Tabs>
-
       </Modal>
     )
   }

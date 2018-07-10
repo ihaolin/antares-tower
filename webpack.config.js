@@ -17,8 +17,8 @@ var cssOption = {
 module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: '[name].js',
-    chunkFilename: '[name].js'
+    filename: dev ? '[name].js' : '[name].[hash:6].js',
+    chunkFilename: dev ? '[id].js' : '[id].[hash:6].js'
   },
   // see https://webpack.github.io/docs/webpack-dev-server.html
   devServer: {
@@ -28,7 +28,8 @@ module.exports = {
     hot: true,
     // #https://github.com/webpack/webpack-dev-server/issues/882
     disableHostCheck: true,
-    
+
+    /* api mock */
     before (app) {
       apiMocker(app, path.resolve('./mocker.js'), {
         proxy: {
@@ -37,10 +38,12 @@ module.exports = {
         changeHost: true
       })
     },
-    
+
+
+    // api proxy redirect
     proxy: {
       '/api': {
-        target: 'http://localhost:22111'
+        target: 'http://192.168.3.208:22111'
         // pathRewrite: {'^/api' : ''}
       }
     },

@@ -3,7 +3,7 @@ import { Breadcrumb, Button, Divider, Input, Table } from 'antd'
 import { Ajax } from '../common/ajax'
 import AppDelete from './app-delete'
 import AppEdit from './app-edit'
-import t from '../common/i18n'
+import t from '../../i18n'
 
 const Search = Input.Search
 
@@ -50,10 +50,6 @@ export default class Apps extends Component {
     })
   }
 
-  onPageChange (p) {
-    this.loadApps(p.current)
-  }
-
   onAdd () {
     this.setState({
       editingApp: {
@@ -68,34 +64,14 @@ export default class Apps extends Component {
     this.loadApps(this.state.pagination.current, this.state.searchAppName)
   }
 
-  onUpdate (app) {
-    this.setState({editingApp: app})
-  }
-
-  onDelete (app) {
-    this.setState({deletingApp: app})
-  }
-
   onEditSubmitted () {
     this.setState({editingApp: null})
     this.loadApps(this.state.pagination.current)
   }
 
-  onEditCanceled () {
-    this.setState({editingApp: null})
-  }
-
   onDeleteSubmitted () {
     this.setState({deletingApp: null})
     this.loadApps(this.state.pagination.current)
-  }
-
-  onDeleteCanceled () {
-    this.setState({deletingApp: null})
-  }
-
-  onSearch (appName) {
-    this.loadApps(1, appName)
   }
 
   render () {
@@ -114,7 +90,7 @@ export default class Apps extends Component {
 
         <Search
           style={{width: 260}}
-          onSearch={value => this.onSearch(value)}
+          onSearch={value => this.loadApps(1, value.trim())}
           placeholder={t('input.fullname')}
           enterButton/>
         <Button className="ml-3" type="primary" onClick={() => this.onAdd()}>{t('add')}</Button>
@@ -131,22 +107,29 @@ export default class Apps extends Component {
               render (text, record) {
                 return (
                   <span>
-                    <a onClick={() => self.onUpdate(record)}>{t('update')}</a>
+                    <a onClick={() => self.setState({editingApp: record})}>{t('update')}</a>
                     <Divider type="vertical"/>
-                    <a onClick={() => self.onDelete(record)}>{t('delete')}</a>
+                    <a onClick={() => self.setState({deletingApp: record})}>{t('delete')}</a>
                   </span>
                 )
               }
             }
           ]}
           dataSource={this.state.apps}
-          rowKey="id"
           loading={this.state.loading}
           pagination={this.state.pagination}
-          onChange={(p) => this.onPageChange(p)}
+          onChange={(p) => this.loadApps(p.current)}
+          rowKey="id"
         />
-        {editingApp === null ? null : <AppEdit app={editingApp} onSubmitted={() => this.onEditSubmitted()} onCanceled={() => this.onEditCanceled()}/>}
-        {deletingApp === null ? null : <AppDelete app={deletingApp} onSubmitted={() => this.onDeleteSubmitted()} onCanceled={() => this.onDeleteCanceled()}/>}
+        {editingApp === null ? null :
+          <AppEdit app={editingApp}
+                   onSubmitted={() => this.onEditSubmitted()}
+                   onCanceled={() => this.setState({editingApp: null})}/>}
+
+        {deletingApp === null ? null :
+          <AppDelete app={deletingApp}
+                     onSubmitted={() => this.onDeleteSubmitted()}
+                     onCanceled={() => this.setState({deletingApp: null})}/>}
       </div>
     )
   }

@@ -162,42 +162,6 @@ const jobControlsPagingData = {
   'total': 3,
   'data': [
     {
-      'id': 6,
-      'clazz': 'me.hao0.antares.client.job.HelloJob6',
-      'cron': '0 0/1 * * * ?',
-      'desc': 'hello任务5',
-      'scheduler': '127.0.0.1:22122',
-      'fireTime': '2017-01-12 21:19:00',
-      'prevFireTime': '2017-01-12 21:18:00',
-      'nextFireTime': '2017-01-12 21:20:00',
-      'state': 5,
-      'stateDesc': '暂停'
-    },
-    {
-      'id': 5,
-      'clazz': 'me.hao0.antares.client.job.HelloJob5',
-      'cron': '0 0/1 * * * ?',
-      'desc': 'hello任务5',
-      'scheduler': '127.0.0.1:22122',
-      'fireTime': '2017-01-12 21:19:00',
-      'prevFireTime': '2017-01-12 21:18:00',
-      'nextFireTime': '2017-01-12 21:20:00',
-      'state': 4,
-      'stateDesc': '执行失败'
-    },
-    {
-      'id': 4,
-      'clazz': 'me.hao0.antares.client.job.HelloJob4',
-      'cron': '0 0/1 * * * ?',
-      'desc': 'hello任务4',
-      'scheduler': null,
-      'fireTime': null,
-      'prevFireTime': null,
-      'nextFireTime': null,
-      'state': 3,
-      'stateDesc': '停止'
-    },
-    {
       'id': 3,
       'clazz': 'com.xxx.FuckJob',
       'cron': '0 0/1 * * * ?',
@@ -232,6 +196,42 @@ const jobControlsPagingData = {
       'nextFireTime': '2017-01-12 21:20:00',
       'state': 2,
       'stateDesc': '执行中'
+    },
+    {
+      'id': 4,
+      'clazz': 'me.hao0.antares.client.job.HelloJob4',
+      'cron': '0 0/1 * * * ?',
+      'desc': 'hello任务4',
+      'scheduler': null,
+      'fireTime': null,
+      'prevFireTime': null,
+      'nextFireTime': null,
+      'state': 3,
+      'stateDesc': '停止'
+    },
+    {
+      'id': 5,
+      'clazz': 'me.hao0.antares.client.job.HelloJob5',
+      'cron': '0 0/1 * * * ?',
+      'desc': 'hello任务5',
+      'scheduler': '127.0.0.1:22122',
+      'fireTime': '2017-01-12 21:19:00',
+      'prevFireTime': '2017-01-12 21:18:00',
+      'nextFireTime': '2017-01-12 21:20:00',
+      'state': 4,
+      'stateDesc': '执行失败'
+    },
+    {
+      'id': 6,
+      'clazz': 'me.hao0.antares.client.job.HelloJob6',
+      'cron': '0 0/1 * * * ?',
+      'desc': 'hello任务5',
+      'scheduler': '127.0.0.1:22122',
+      'fireTime': '2017-01-12 21:19:00',
+      'prevFireTime': '2017-01-12 21:18:00',
+      'nextFireTime': '2017-01-12 21:20:00',
+      'state': 5,
+      'stateDesc': '暂停'
     }
   ]
 }

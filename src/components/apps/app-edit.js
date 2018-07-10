@@ -2,7 +2,7 @@ import { Button, Form, Input, Modal } from 'antd'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { Ajax } from '../common/ajax'
-import t from '../common/i18n'
+import t from '../../i18n'
 
 const FormItem = Form.Item
 

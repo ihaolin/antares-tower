@@ -1,7 +1,7 @@
-import { Button, Modal, Table } from 'antd'
 import React from 'react'
+import { Button, Modal, Table } from 'antd'
 import { Ajax } from '../common/ajax'
-import t from '../common/i18n'
+import t from '../../i18n'
 
 class ServerJobs extends React.Component {
 
@@ -16,10 +16,9 @@ class ServerJobs extends React.Component {
   loadJobs () {
 
     const server = this.props.server
-
     const self = this
-    self.setState({loading: true})
 
+    self.setState({loading: true})
     Ajax.get('/api/servers/jobs', {server: server}, function (jobs) {
       self.setState({
         loading: false,
@@ -32,60 +31,47 @@ class ServerJobs extends React.Component {
     this.loadJobs()
   }
 
-  onRefresh () {
-    this.loadJobs()
-  }
-
   handleCancel () {
     this.props.onCanceled && this.props.onCanceled()
   }
 
   render () {
 
-    const self = this
-    const server = this.props.server
-
     return (
       <Modal
-        title={t('clusters.servers.jobs', server)}
+        title={t('clusters.servers.jobs', this.props.server)}
         wrapClassName="vertical-center-modal"
-        visible={true}
         onCancel={() => this.handleCancel()}
         closable={true}
+        visible={true}
+        width={680}
         footer={
-          <Button key="back" type="ghost" size="large"
-                  onClick={() => this.handleCancel()}>{t('close')}</Button>
+          <Button type="ghost" size="large" onClick={() => this.handleCancel()}>{t('close')}</Button>
         }>
 
         <Table
           columns={[
-            {title: t('id'), dataIndex: 'id', key: 'id', width: '10%'},
-            {title: t('jobs.class'), dataIndex: 'clazz', key: 'clazz', width: '50%',
-              render: text => <code>{text}</code>
-            },
+            {title: t('id'), dataIndex: 'id', key: 'id'},
+            {title: t('jobs.class'), dataIndex: 'clazz', key: 'clazz', render: text => <code>{text}</code>},
             {
-              title: t('status'), key: 'status', width: '8%',
-              render (text, record) {
+              title: t('status'), key: 'status', render (text, record) {
                 const statusDesc = record.status === 1 ? t('enable') : t('disable')
-                const statusClass = record.status === 1 ? 'status-enbale' : 'status-disable'
+                const statusClass = record.status === 1 ? 'text-success' : 'text-danger'
                 return (
                   <span className={statusClass}>{statusDesc}</span>
                 )
               }
             }
           ]}
+          pagination={false}
           dataSource={this.state.jobs}
           loading={this.state.loading}
-          pagination={false}
-          mr-2={{y: 250}}
-          rowKey="id"
-          size="middle"/>
+          size="middle"
+          rowKey="id"/>
 
       </Modal>
     )
   }
 }
-
-ServerJobs.propTypes = {}
 
 export default ServerJobs
