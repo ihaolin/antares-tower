@@ -22,9 +22,9 @@ class LayoutHeader extends Component {
     var lang = this.state.lang
     lang = lang === 'en' ? 'zh' : 'en'
     language(lang)
-    this.setState({lang})
+    // this.setState({lang})
     // no need to `full reload` current page, change will affected after next component update
-    // location.reload()
+    location.reload()
   }
   
   render () {
